@@ -25,7 +25,6 @@ public class ChatRestController {
 
     @PostMapping
     public void addChat(@RequestBody Chat chat){
-        System.out.println(chat);
         chatService.add(chat);
     }
 }

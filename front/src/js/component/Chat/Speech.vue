@@ -1,6 +1,6 @@
 
 <template>
-    <div class="speech"><p class="arrow_box">{{ item.value }}<img src="../../../img/X.png" class="delete" v-on:click="del"></p></div>
+    <div class="speech"><p class="arrow_box">{{ item.data }}<img src="../../../img/X.png" class="delete" v-on:click="del"></p></div>
 </template>
 
 <script>
