@@ -1,8 +1,2 @@
-<<<<<<< HEAD
-language: java
-script: mvn build
-sudo: true
-=======
 language: java
 script: "cd server && mvn test"
->>>>>>> fd40b4cd6c4ebb05332f7ac0af2d2e27eed901cb
