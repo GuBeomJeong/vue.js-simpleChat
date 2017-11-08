@@ -45,7 +45,7 @@ public class ChatHandler extends TextWebSocketHandler {
         for(WebSocketSession sess : connections){
             sess.sendMessage(echoMessage);
         }
-        //session.sendMessage(echoMessage);
+
 
     }
 }
