@@ -79,5 +79,6 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.13.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.8.10" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.3.7.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:4.3.5.RELEASE" level="project" />
   </component>
 </module>

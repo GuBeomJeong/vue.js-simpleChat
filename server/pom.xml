@@ -227,6 +227,15 @@
         <version>4.3.7.RELEASE</version>
     </dependency>
 
+
+    <!-- Spring websocket -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-websocket</artifactId>
+        <version>${spring-framework.version}</version>
+    </dependency>
+
+
 </dependencies>
 
 <build>
