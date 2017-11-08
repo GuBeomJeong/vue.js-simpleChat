@@ -9,7 +9,6 @@
 
         <input v-model="message" v-on:keyup.enter="make" placeholder="">
         <button v-on:click="make">입력</button>
-        <button v-on:click="getData">갱신</button>
     </div>
 
 </template>
@@ -26,14 +25,37 @@
                 ]
             }
         },
-        methods:{
-            make:function(e){
+        created:function(){
+            this.ws = new WebSocket("ws://165.246.223.108:8080/chat");
+            this.ws.onopen = function () {
+                console.log('websocket opened');
+            };
+            this.ws.onmessage = function (message) {
+                console.log(message);
+                console.log('receive message : ' + message.data);
                 this.items.push({
-                    data:this.message
+                    data:message.data
                 });
 
-                this.pushData();
+            }.bind(this);
+            this.ws.onclose = function (event) {
+                console.log(event);
+                console.log('websocket closed');
+            };
 
+            this.getData();
+        },
+        destroyed:function(){
+           this.ws.close();
+        },
+        methods:{
+            make:function(e){
+//                this.items.push({
+//                    data:this.message
+//                });
+                this.ws.send(this.message);
+                this.message = "";
+                //this.pushData();
 
             },
             deleteSpeech(item){

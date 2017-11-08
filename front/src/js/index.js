@@ -4,9 +4,11 @@ import Vue from 'vue';
 import App from './app.vue';
 import Chat from './component/Chat/Chat.vue';
 import Speech from './component/Chat/Speech.vue';
+import axios from 'axios';
 
 Vue.component('Speech', Speech);
 Vue.component('Chat',Chat);
+
 
 new Vue({
     el: '#app',
