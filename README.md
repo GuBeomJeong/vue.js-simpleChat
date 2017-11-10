@@ -1,5 +1,6 @@
 # vue.js-simpleChat [![Build Status](https://travis-ci.org/GuBeomJeong/vue.js-simpleChat.svg?branch=master)](https://travis-ci.org/GuBeomJeong/vue.js-simpleChat)
-간단한 채팅 구현
+
+채팅 서비스
 
 # front-end
 * vue.js
@@ -12,6 +13,7 @@
 * maven
 * mysql
 * jpa
+* docker
 * amazon ec2
 * nginx
 

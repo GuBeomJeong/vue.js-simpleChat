@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "Chat")
@@ -10,31 +11,55 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "data")
-    private String data;
+    @Column(name = "content")
+    private String content;
 
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "id=" + id +
-                ", data='" + data + '\'' +
-                '}';
-    }
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "nickname")
+    private String nickname;
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 
     public int getId() {
 
         return id;
     }
 
-    public String getData() {
-        return data;
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "content:'" + content + '\'' +
+                ", date:" + date +
+                ", nickname:'" + nickname + '\'' +
+                '}';
     }
 }

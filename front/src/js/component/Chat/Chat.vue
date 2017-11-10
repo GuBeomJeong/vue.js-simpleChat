@@ -1,62 +1,96 @@
 
 
 <template>
-    <div>
+    <div id = "chat-container">
 
-        <div v-for="item in items">
-            <Speech :item="item" v-on:removeSpeech="deleteSpeech"></Speech>
+        <div class="uk-card uk-card-default uk-card-body" id ="chat">
+            <div v-for="item in items">
+                <Speech :item="item" v-on:removeSpeech="deleteSpeech"></Speech>
+            </div>
         </div>
 
-        <input v-model="message" v-on:keyup.enter="make" placeholder="">
-        <button v-on:click="make">입력</button>
-    </div>
+        <div uk-grid>
+            <div class=" uk-width-3-4">
+                <input class="uk-input" v-model="content" v-on:keyup.enter="submitData" placeholder="">
+            </div>
+            <div class=" uk-width-1-4">
+                <span class="uk-badge" id="submit" v-on:click="submitData">입력</span>
+            </div>
+        </div>
 
+        <div uk-grid>
+            <div class=" uk-width-1-4">
+                Nickname
+            </div>
+            <div class=" uk-width-3-4">
+                <input class="uk-input" v-model="nickname" placeholder="messi">
+            </div>
+        </div>
+
+        <div>
+            <p>
+                현재 {{ connection_num }}명 접속중
+            </p>
+        </div>
+
+    </div>
 </template>
 
 <script>
     import axios from "axios";
 
+
     export default {
         data: function() {
             return {
-                message:"",
+                content:"",
+                nickname:"messi",
+                connection_num:0,
                 items:[
 
                 ]
             }
         },
         created:function(){
-            this.ws = new WebSocket("ws://165.246.223.108:8080/chat");
+
+            this.ws = new WebSocket("ws://165.246.223.95:8080/chat");
             this.ws.onopen = function () {
-                console.log('websocket opened');
+                console.log("socket open");
             };
             this.ws.onmessage = function (message) {
-                console.log(message);
-                console.log('receive message : ' + message.data);
-                this.items.push({
-                    data:message.data
-                });
+                console.log(message.data);
+                let msg = JSON.parse(message.data);
+
+                if(msg.type === "num"){
+                    this.connection_num = msg.connection_num;
+                }else{
+                    this.addMessage(msg);
+                }
 
             }.bind(this);
             this.ws.onclose = function (event) {
-                console.log(event);
-                console.log('websocket closed');
+                console.log("socket closed");
             };
 
             this.getData();
         },
+        mounted:function(){
+            this.chatEl = document.getElementById("chat");
+        },
         destroyed:function(){
            this.ws.close();
         },
+        updated:function(){
+            this.fixScroll();
+        },
         methods:{
-            make:function(e){
-//                this.items.push({
-//                    data:this.message
-//                });
-                this.ws.send(this.message);
-                this.message = "";
-                //this.pushData();
-
+            submitData(e){
+                let message = {
+                    nickname : this.nickname,
+                    content : this.content
+                };
+                this.ws.send(JSON.stringify(message));
+                this.content = "";
             },
             deleteSpeech(item){
                 this.items.splice(this.items.indexOf(item),1);
@@ -65,17 +99,39 @@
                 axios.get("/api/chat").then(
                     (result)=>{
                         this.items =  result.data;
+
                     }
                 );
             },
-            pushData(){
-                console.log(this.message);
-                axios.post("/api/chat",{"data":this.message}).then(()=>{this.message = "";});
+            addMessage(msg){
+
+                this.items.push({
+                    content:msg.content,
+                    date:msg.date,
+                    nickname:msg.nickname
+                });
+            },
+            fixScroll(){
+                this.chatEl.scrollTop = this.chatEl.scrollHeight;
             }
+
         }
     }
 </script>
 
 <style>
+#submit {
+    cursor:pointer;
+}
 
+#chat {
+    max-width : 300px;
+    max-height : 500px;
+    overflow-y: scroll;
+}
+
+#chat-container {
+    margin: 0 auto;
+    width : 300px;
+}
 </style>
