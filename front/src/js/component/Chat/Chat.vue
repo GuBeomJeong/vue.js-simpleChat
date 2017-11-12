@@ -38,6 +38,7 @@
 
 <script>
     import axios from "axios";
+    import property from "../../property/property.json"
 
 
     export default {
@@ -53,7 +54,7 @@
         },
         created:function(){
 
-            this.ws = new WebSocket("ws://165.246.223.95:8080/chat");
+            this.ws = new WebSocket(property.socket_address);
             this.ws.onopen = function () {
                 console.log("socket open");
             };

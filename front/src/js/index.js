@@ -2,7 +2,7 @@
 import './style.css';
 import 'uikit/dist/css/uikit.min.css'
 import Vue from 'vue';
-import App from './app.vue';
+import App from './App.vue';
 import Chat from './component/Chat/Chat.vue';
 import Speech from './component/Chat/Speech.vue';
 import UIkit from 'uikit';
