@@ -31,6 +31,9 @@ public class ChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
+        System.out.println(session.getLocalAddress());
+        System.out.println(session.getRemoteAddress());
+        
         connections.add(session);
 
         sendAllConnection(convertConnectionNum());
@@ -39,6 +42,8 @@ public class ChatHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         super.afterConnectionClosed(session, status);
+
+
         connections.remove(session);
 
         sendAllConnection(convertConnectionNum());

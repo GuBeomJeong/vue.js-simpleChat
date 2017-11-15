@@ -1,10 +1,13 @@
 
 
 <template>
-    <div id = "chat-container">
-
+    <div>
+        <div class="uk-text-center">
+            채팅
+        </div>
         <div class="uk-card uk-card-default uk-card-body" id ="chat">
-            <div v-for="item in items">
+            <div uk-spinner v-show="spinnerActive === true"></div>
+            <div v-for="item in items" v-show="spinnerActive === false">
                 <Speech :item="item" v-on:removeSpeech="deleteSpeech"></Speech>
             </div>
         </div>
@@ -23,7 +26,7 @@
                 Nickname
             </div>
             <div class=" uk-width-3-4">
-                <input class="uk-input" v-model="nickname" placeholder="messi">
+                <input class="uk-input" v-model="nickname" >
             </div>
         </div>
 
@@ -45,11 +48,12 @@
         data: function() {
             return {
                 content:"",
-                nickname:"messi",
+                nickname:"Jeong",
                 connection_num:0,
                 items:[
 
-                ]
+                ],
+                spinnerActive:true
             }
         },
         created:function(){
@@ -65,6 +69,7 @@
                 if(msg.type === "num"){
                     this.connection_num = msg.connection_num;
                 }else{
+
                     this.addMessage(msg);
                 }
 
@@ -83,6 +88,7 @@
         },
         updated:function(){
             this.fixScroll();
+
         },
         methods:{
             submitData(e){
@@ -100,7 +106,7 @@
                 axios.get("/api/chat").then(
                     (result)=>{
                         this.items =  result.data;
-
+                        this.spinnerActive = false;
                     }
                 );
             },
@@ -126,13 +132,9 @@
 }
 
 #chat {
-    max-width : 300px;
-    max-height : 500px;
+    height : 500px;
     overflow-y: scroll;
 }
 
-#chat-container {
-    margin: 0 auto;
-    width : 300px;
-}
+
 </style>
