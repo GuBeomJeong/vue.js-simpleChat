@@ -14,9 +14,7 @@ http://52.91.166.54:8080/
 * maven
 * mysql
 * jpa
-* docker
 * amazon ec2
-* nginx
 
 # etc
 * travis ci
